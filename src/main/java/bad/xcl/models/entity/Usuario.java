@@ -36,7 +36,7 @@ public class Usuario implements Serializable {
 	private String detalle;
 	@Column(name = "email_usuario", length = 128)
 	private String email;
-	@Column(name = "tel_usuario", length = 15)
+	@Column(name = "telefono_usuario", length = 15)
 	private String telefono;
 	
 	//FKs
@@ -57,7 +57,7 @@ public class Usuario implements Serializable {
 	private Pais pais;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_hospital", nullable = false)
+	@JoinColumn(name = "id_hospital") //Permite nulos para admin_general
 	private Hospital hospital;
 	
 	@ManyToOne
