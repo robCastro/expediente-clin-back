@@ -1,4 +1,4 @@
- package bad.xcl.controller;
+package bad.xcl.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,115 +18,126 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import bad.xcl.models.entity.EstadoCivil;
-import bad.xcl.models.services.IEstadoCivilService;
+import bad.xcl.models.entity.Hospital;
+import bad.xcl.models.services.IHospitalService;
 
 @RestController
-@RequestMapping("/estado_civil")
-public class EstadoCivilRestController {
+@RequestMapping("/hospital")
+public class HospitalRestController {
 
 	@Autowired
-	private IEstadoCivilService estadoCivilService;
+	private IHospitalService hospitalService;
 	
-	//Todos los Estados Civiles.
+	//Hospitales aprobados.
+	@GetMapping("/aprobados")
+	public List<Hospital> aprobados(){
+		return hospitalService.listarAprobados();
+	}
+	
+	//Hospitales pendientes.
+	@GetMapping("/pendientes")
+	public List<Hospital> pendientes(){
+		return hospitalService.listarPendientes();
+	}
+	
+	//Todos los hospitales sin filtro.
 	@GetMapping("/todos")
-	public List<EstadoCivil> index(){
-		return estadoCivilService.listar();
+	public List<Hospital> index(){
+		return hospitalService.findAll();
 	}
 	
-	//Estados Civiles activos.
-	@GetMapping("/activos")
-	public List<EstadoCivil> listarActivos(){
-		return estadoCivilService.listarActivos();
-	}
-	
-	//Buscar por ID, estado civil.
+	//Buscar por ID, hospital.
 	@GetMapping("/{id}")
 	public ResponseEntity<?> show(@PathVariable Integer id){
-		
-		EstadoCivil estadoCivil = null;
+		Hospital hospital = null;
 		Map<String, Object> response  = new HashMap<>();
 		
 		try {
-			estadoCivil = estadoCivilService.findById(id);
+			hospital = hospitalService.findById(id);
 		} catch(DataAccessException e) {
 			response.put("mensaje","Error al realizar la consulta en la base de datos.");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		if(estadoCivil == null) {
-			response.put("mensaje","El estado civil con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+		if(hospital == null) {
+			response.put("mensaje","El hospital con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
 			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<EstadoCivil>(estadoCivil, HttpStatus.OK);
+		return new ResponseEntity<Hospital>(hospital, HttpStatus.OK);
 	}
 	
-	//Crear nuevo estado Civil.
+	//Crear nuevo hospital.
 	@PostMapping("/crear")
-	public ResponseEntity<?> create(@RequestBody EstadoCivil estadoCivil) {
+	public ResponseEntity<?> create(@RequestBody Hospital hospital) {
 		
-		EstadoCivil estadoNuevo = null;
+		Hospital hospitalNuevo = null;
 		Map<String, Object> response  = new HashMap<>();
 		
 		try {
-			estadoCivil.setId(estadoCivilService.generarId());
-			estadoNuevo = estadoCivilService.save(estadoCivil);
+			hospital.setId(hospitalService.generarId());
+			hospitalNuevo = hospitalService.save(hospital);
 		} catch (DataAccessException e) {
 			response.put("mensaje","Error al realizar al insertar en la base de datos.");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		response.put("mensaje", "El estado civil ha sido creado con éxito");
-		response.put("estado", estadoNuevo);
+		response.put("mensaje", "El hospital ha sido creado con éxito");
+		response.put("estado", hospitalNuevo);
 		
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	//Actualizar estado civil.
+	//Actualizar Hospital.
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody EstadoCivil estadoCivil, @PathVariable Integer id){
-		EstadoCivil estadoCivilActual = estadoCivilService.findById(id);
-		EstadoCivil estadoCivilUpdated = null;
+	public ResponseEntity<?> update(@RequestBody Hospital hospital, @PathVariable Integer id) {
+		Hospital hospitalActual = hospitalService.findById(id);
+		Hospital hospitalUpdated = null;
 		Map<String, Object> response  = new HashMap<>();
 		
-		if(estadoCivilActual == null) {
-			response.put("mensaje","Error, no se puede editar: El estado civil con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+		if(hospitalActual == null) {
+			response.put("mensaje","Error, no se puede editar: El hospital con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
 			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
 		}
-		
-		try {
-			estadoCivilActual.setNombre(estadoCivil.getNombre());
-			estadoCivilActual.setActivo(estadoCivil.getActivo());
-			estadoCivilUpdated = estadoCivilService.save(estadoCivilActual);
+		try {	
+			hospitalActual.setNombre(hospital.getNombre());
+			hospitalActual.setFecha(hospital.getFecha());
+			hospitalActual.setTelefono(hospital.getTelefono());
+			hospitalActual.setDetalle(hospital.getDetalle());
+			hospitalActual.setAprobado(hospital.getAprobado());
+			hospitalActual.setActivo(hospital.getActivo());
+			hospitalActual.setPais(hospital.getPais());
+			hospitalActual.setMunicipio(hospital.getMunicipio());
+			
+			hospitalUpdated = hospitalService.save(hospitalActual);
 		} catch (DataAccessException e) {
 			response.put("mensaje","Error al realizar al actualizar en la base de datos.");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		response.put("mensaje", "El estado civil ha sido actualizado con éxito");
-		response.put("estado", estadoCivilUpdated);
+	
+		response.put("mensaje", "El hospital ha sido actualizado con éxito");
+		response.put("estado", hospitalUpdated);
 		
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	//Eliminar fisicamente estado civil.
+	//Eliminar fisicamente hospital de la base de datos.
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable Integer id){
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
 		Map<String, Object> response  = new HashMap<>();
 		try {
-			estadoCivilService.delete(id);
+			hospitalService.delete(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje","Error al eliminar en la base de datos.");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El estado civil ha sido eliminado con éxito");
+		response.put("mensaje", "El hospital ha sido eliminado con éxito");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+		
 	}
-	
 	
 }
