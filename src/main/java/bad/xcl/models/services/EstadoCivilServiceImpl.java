@@ -23,6 +23,12 @@ public class EstadoCivilServiceImpl implements IEstadoCivilService {
 	}
 	
 	@Override
+	public List<EstadoCivil> listarActivos() {
+		return (List<EstadoCivil>) estadoCivilDao.findAllByActivo(true);
+	}
+
+	
+	@Override
 	public EstadoCivil findById(Integer id) {
 		return estadoCivilDao.findById(id).orElse(null);
 	}

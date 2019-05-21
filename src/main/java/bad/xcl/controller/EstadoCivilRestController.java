@@ -33,6 +33,11 @@ public class EstadoCivilRestController {
 		return estadoCivilService.listar();
 	}
 	
+	@GetMapping("/activos")
+	public List<EstadoCivil> listarActivos(){
+		return estadoCivilService.listarActivos();
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> show(@PathVariable Integer id){
 		
