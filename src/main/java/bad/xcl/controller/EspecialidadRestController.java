@@ -22,14 +22,14 @@ import bad.xcl.models.entity.Especialidad;
 import bad.xcl.models.services.IEspecialidadService;
 
 @RestController
-@RequestMapping("/especialidad/")
+@RequestMapping("/especialidad")
 public class EspecialidadRestController {
 	
 	@Autowired
 	private IEspecialidadService especialidadService;
 	
 	//Buscar Todos
-	@GetMapping("/especialidades")
+	@GetMapping("/lista")
 	public List<Especialidad> index(){
 		return especialidadService.findAll();
 	}
@@ -71,7 +71,7 @@ public class EspecialidadRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/especialidades/{id}")
+	@PutMapping("/especialidad/{id}")
 	public ResponseEntity<?> update(@RequestBody Especialidad especialidad, @PathVariable Integer id) {
 		Map<String, Object> response = new HashMap<>();
 		Especialidad especialidadActual = especialidadService.findById(id);
@@ -79,11 +79,11 @@ public class EspecialidadRestController {
 			response.put("mensaje", "Error, no se pudo editar, la especialidad ".concat(id.toString()).concat(" no existe"));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		Especialidad especialidadActualizada = null;
+		Especialidad especialidadActualizado = null;
 		especialidadActual.setNombre(especialidad.getNombre());
 		especialidadActual.setActivo(especialidad.getActivo());
 		try {
-			especialidadActualizada = especialidadService.save(especialidadActual);			
+			especialidadActualizado = especialidadService.save(especialidadActual);			
 		}
 		catch(DataAccessException e) {
 			response.put("mensaje", "Error al actualizar el estado en la base de datos");
@@ -91,13 +91,15 @@ public class EspecialidadRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		response.put("mensaje", "La especialidad ha sido actualizado con exito");
-		response.put("especialidad", especialidadActualizada);
+		response.put("especialidad", especialidadActualizado);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
-	@DeleteMapping("/especialidad/{id}")
+	
+	
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
-
+		//pone activo en false
 		Map<String, Object> response = new HashMap<>();
 		try {
 			Especialidad especialidadActual = especialidadService.findById(id);

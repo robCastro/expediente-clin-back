@@ -21,14 +21,14 @@ import bad.xcl.models.entity.Genero;
 import bad.xcl.models.services.IGeneroService;
 
 @RestController
-@RequestMapping("/genero/")
+@RequestMapping("/genero")
 public class GeneroRestController {
 	
 	@Autowired
 	private IGeneroService generoService;
 	
 	//Buscar Todos
-	@GetMapping("/generos")
+	@GetMapping("/lista")
 	public List<Genero> index(){
 		return generoService.findAll();
 	}
@@ -70,7 +70,7 @@ public class GeneroRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/generos/{id}")
+	@PutMapping("/genero/{id}")
 	public ResponseEntity<?> update(@RequestBody Genero genero, @PathVariable Integer id) {
 		Map<String, Object> response = new HashMap<>();
 		Genero generoActual = generoService.findById(id);
@@ -94,7 +94,7 @@ public class GeneroRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
-	@DeleteMapping("/generos/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
 
 		Map<String, Object> response = new HashMap<>();
