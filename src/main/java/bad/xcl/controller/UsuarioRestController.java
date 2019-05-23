@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.dao.IUsuarioDao;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IUsuarioService;
 
@@ -27,9 +28,13 @@ public class UsuarioRestController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
+	@Autowired
+	private IUsuarioDao usuarioDao;
+	
 	@GetMapping("/todos")
 	public List<Usuario> index(){
-		return usuarioService.listar();
+		//return usuarioService.listar();
+		return usuarioDao.listarRaw();
 	}
 	
 	@GetMapping("/{id}")

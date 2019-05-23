@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.dao.IRolDao;
 import bad.xcl.models.entity.Rol;
 import bad.xcl.models.services.IRolService;
 
@@ -23,9 +24,13 @@ public class RolRestController {
 	@Autowired
 	private IRolService rolService;
 	
+	@Autowired
+	private IRolDao rolDao;
+	
 	@GetMapping("/todos")
 	public List<Rol> index(){
-		return rolService.listar();
+		//return rolService.listar();
+		return rolDao.listarRaw();
 	}
 	
 	@GetMapping("/{id}")
