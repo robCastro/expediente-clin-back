@@ -11,6 +11,9 @@ public interface IHospitalService  {
 	
 	/* Lista de Hospitales Pendientes */
 	public List<Hospital> listarPendientes();
+
+	/* Lista de Hospitales Denegados */
+	public List<Hospital> listarDenegados();
 	
 	public List<Hospital> findAll();
 	

@@ -72,6 +72,7 @@ public class EstadoCivilRestController {
 		
 		try {
 			estadoCivil.setId(estadoCivilService.generarId());
+			estadoCivil.setActivo(true);
 			estadoNuevo = estadoCivilService.save(estadoCivil);
 		} catch (DataAccessException e) {
 			response.put("mensaje","Error al realizar al insertar en la base de datos.");
