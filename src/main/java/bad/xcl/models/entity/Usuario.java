@@ -20,7 +20,7 @@ public class Usuario implements Serializable {
 	@Id
 	@Column(name = "id_usuario")
 	private Integer id;
-	@Column(name = "username", nullable = false, length = 64)
+	@Column(name = "username", nullable = false, length = 64, unique = true)
 	private String username;
 	@Column(name = "password", nullable = false, length = 256)
 	private String password;
@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
 	private Date fecha;
 	@Column(name = "detalle_dir_usuario", length = 512)
 	private String detalle;
-	@Column(name = "email_usuario", length = 128)
+	@Column(name = "email_usuario", length = 128, unique = true)
 	private String email;
 	@Column(name = "telefono_usuario", length = 15)
 	private String telefono;

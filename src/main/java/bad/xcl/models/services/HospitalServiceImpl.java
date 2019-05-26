@@ -24,6 +24,12 @@ public class HospitalServiceImpl implements IHospitalService {
 	@Override
 	@Transactional(readOnly=true)
 	public List<Hospital> listarPendientes() {
+		return hospitalDao.findAllPendiente();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Hospital> listarDenegados(){
 		return hospitalDao.findAllByAprobado(false);
 	}
 
@@ -48,7 +54,12 @@ public class HospitalServiceImpl implements IHospitalService {
 	@Override
 	@Transactional
 	public void delete(Integer id) {
-		hospitalDao.deleteById(id);
+		Hospital hospital = this.findById(id);
+		if (hospital != null){
+			hospital.setActivo(false);
+			hospitalDao.save(hospital);
+		}
+		//hospitalDao.deleteById(id);
 	}
 	
 	@Override

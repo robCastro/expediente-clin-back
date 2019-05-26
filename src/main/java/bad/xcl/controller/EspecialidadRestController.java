@@ -58,7 +58,7 @@ public class EspecialidadRestController {
 		Especialidad especialidadNew = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			
+			especialidad.setActivo(true);
 			especialidadNew = especialidadService.guardarEspecialidad(especialidad);
 		}
 		catch(DataAccessException e) {

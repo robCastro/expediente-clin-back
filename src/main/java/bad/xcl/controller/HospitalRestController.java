@@ -39,6 +39,12 @@ public class HospitalRestController {
 	public List<Hospital> pendientes(){
 		return hospitalService.listarPendientes();
 	}
+
+	//Hospitales denegados.
+	@GetMapping("/denegados")
+	public List<Hospital> denegados(){
+		return hospitalService.listarDenegados();
+	}
 	
 	//Todos los hospitales sin filtro.
 	@GetMapping("/todos")
@@ -77,6 +83,7 @@ public class HospitalRestController {
 		
 		try {
 			hospital.setId(hospitalService.generarId());
+			hospital.setActivo(true);
 			hospitalNuevo = hospitalService.save(hospital);
 		} catch (DataAccessException e) {
 			response.put("mensaje","Error al realizar al insertar en la base de datos.");

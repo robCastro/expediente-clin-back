@@ -17,99 +17,112 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bad.xcl.models.entity.Genero;
-import bad.xcl.models.services.IGeneroService;
+import bad.xcl.models.dao.IUsuarioDao;
+import bad.xcl.models.entity.Usuario;
+import bad.xcl.models.services.IUsuarioService;
 
 @RestController
-@RequestMapping("/genero")
-public class GeneroRestController {
+@RequestMapping("/usuario")
+public class UsuarioRestController {
 	
 	@Autowired
-	private IGeneroService generoService;
+	private IUsuarioService usuarioService;
 	
-	//Buscar Todos
-	@GetMapping("/lista")
-	public List<Genero> index(){
-		return generoService.findAll();
+	@Autowired
+	private IUsuarioDao usuarioDao;
+	
+	@GetMapping("/todos")
+	public List<Usuario> index(){
+		//return usuarioService.listar();
+		return usuarioDao.listarRaw();
 	}
 	
-	@GetMapping("genero/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> show(@PathVariable Integer id) {
-		Genero genero = null;
+		Usuario usuario = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			genero = generoService.findById(id);
+			usuario = usuarioService.findById(id);
 		}
 		catch(DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta a la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			response.put("mensaje", "Error al realizar la consulta a la Base de Datos");
+			response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		if(genero == null) {
-			response.put("mensaje", "El Genero ".concat(id.toString()).concat(" no existe"));
+		if(usuario == null) {
+			response.put("mensaje", "El usuario " + id + " no existe.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Genero>(genero, HttpStatus.OK);
+		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
 	}
 	
 	@PostMapping("/crear")
-	public ResponseEntity<?> create(@RequestBody Genero genero) {
-		Genero generoNew = null;
+	public ResponseEntity<?> create(@RequestBody Usuario usuario) {
+		Usuario usuarioNew = null;
+		usuario.setEnabled(true);
 		Map<String, Object> response = new HashMap<>();
 		try {
-			genero.setActivo(true);
-			generoNew = generoService.guardarGenero(genero);
+			usuarioNew = usuarioService.guardar(usuario);
 		}
 		catch(DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert a la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El Genero ha sido creado con exito");
-		response.put("genero", generoNew);
+		response.put("mensaje", "El usuario ha sido creado con exito");
+		response.put("usuario", usuarioNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/genero/{id}")
-	public ResponseEntity<?> update(@RequestBody Genero genero, @PathVariable Integer id) {
+	//No actualiza username ni contrasenia
+	@PutMapping("/{id}")
+	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Integer id) {
 		Map<String, Object> response = new HashMap<>();
-		Genero generoActual = generoService.findById(id);
-		if(generoActual == null) {
-			response.put("mensaje", "Error, no se pudo editar, el genero ".concat(id.toString()).concat(" no existe"));
+		Usuario usuarioActual = usuarioService.findById(id);
+		if(usuarioActual == null) {
+			response.put("mensaje", "Error, no se pudo editar, el usuario ".concat(id.toString()).concat(" no existe"));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		Genero generoActualizado = null;
-		generoActual.setNombre(genero.getNombre());
-		generoActual.setActivo(genero.getActivo());
+		Usuario usuarioActualizado = null;
+		usuarioActual.setApellidos(usuario.getApellidos());
+		usuarioActual.setDetalle(usuario.getDetalle());
+		usuarioActual.setEmail(usuario.getEmail());
+		usuarioActual.setEnabled(usuario.getEnabled());
+		usuarioActual.setEspecialidad(usuario.getEspecialidad());
+		usuarioActual.setEstadoCivil(usuario.getEstadoCivil());
+		usuarioActual.setFecha(usuario.getFecha());
+		usuarioActual.setGenero(usuario.getGenero());
+		usuarioActual.setHospital(usuario.getHospital());
+		usuarioActual.setMunicipio(usuario.getMunicipio());
+		usuarioActual.setNombres(usuario.getNombres());
+		usuarioActual.setPais(usuario.getPais());
+		usuarioActual.setRoles(usuario.getRoles());
+		usuarioActual.setTelefono(usuario.getTelefono());
 		try {
-			generoActualizado = generoService.save(generoActual);			
+			usuarioActualizado = usuarioService.save(usuarioActual);			
 		}
 		catch(DataAccessException e) {
 			response.put("mensaje", "Error al actualizar el estado en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El genero ha sido actualizado con exito");
-		response.put("genero", generoActualizado);
+		response.put("mensaje", "El usuario ha sido actualizado con exito");
+		response.put("usuario", usuarioActualizado);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id) {
-
 		Map<String, Object> response = new HashMap<>();
 		try {
-			Genero generoActual = generoService.findById(id);
-			generoActual.setActivo(false);
-			generoService.save(generoActual);
+			usuarioService.eliminar(id);
 		}
 		catch(DataAccessException e) {
-			response.put("mensaje", "Error al eliminar el genero de la base de datos");
+			response.put("mensaje", "Error al eliminar el usuario de la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El genero ha sido eliminado con exito");
+		response.put("mensaje", "El usuario ha sido eliminado con exito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 }
-
