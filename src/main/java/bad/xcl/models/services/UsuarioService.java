@@ -1,4 +1,4 @@
-package bad.xcl.models.service;
+package bad.xcl.models.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
