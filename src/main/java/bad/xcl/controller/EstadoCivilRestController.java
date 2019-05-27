@@ -131,7 +131,7 @@ public class EstadoCivilRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
-	//Actualizar estado civil.
+	//Eliminar estado civil.
 	@PutMapping("/eliminar/{id}")
 	public ResponseEntity<?> eliminarLogicamente(@RequestBody EstadoCivil estadoCivil, @PathVariable Integer id){
 		EstadoCivil estadoCivilActual = estadoCivilService.findById(id);

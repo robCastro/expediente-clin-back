@@ -127,4 +127,29 @@ public class UsuarioRestController {
 		response.put("mensaje", "El usuario ha sido eliminado con exito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
+	
+	//Habilitar usuario
+	@PutMapping("habilitar/{id}")
+	public ResponseEntity<?> habilitarUsuario(@RequestBody Usuario usuario, @PathVariable Integer id) {
+		Map<String, Object> response = new HashMap<>();
+		Usuario usuarioActual = usuarioService.findById(id);
+		if(usuarioActual == null) {
+			response.put("mensaje", "Error, no se pudo habilitar, el usuario ".concat(id.toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		Usuario usuarioActualizado = null;
+		usuarioActual.setEnabled(true);
+		try {
+			usuarioActualizado = usuarioService.save(usuarioActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al habilitar el estado en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El usuario ha sido habilitado con exito");
+		response.put("usuario", usuarioActualizado);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
+	
 }
