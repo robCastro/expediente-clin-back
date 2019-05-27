@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bad.xcl.models.dao.IGeneroDao;
+import bad.xcl.models.entity.Especialidad;
 import bad.xcl.models.entity.Genero;
 
 @Service
@@ -35,6 +36,10 @@ public class GeneroServiceImpl implements IGeneroService {
 	@Override
 	public List<Genero> listarGeneros() {
 		return generoDao.findAllByActivo(true);
+	}
+	@Override
+	public List<Genero> listarActivos() {
+		return (List<Genero>) generoDao.findAllByActivo(true);
 	}
 
 	@Override

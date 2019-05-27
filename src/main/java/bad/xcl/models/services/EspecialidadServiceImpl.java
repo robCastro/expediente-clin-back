@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bad.xcl.models.dao.IEspecialidadDao;
 import bad.xcl.models.entity.Especialidad;
+import bad.xcl.models.entity.EstadoCivil;
 
 @Service
 public class EspecialidadServiceImpl implements IEspecialidadService{
@@ -19,6 +20,10 @@ public class EspecialidadServiceImpl implements IEspecialidadService{
 	@Transactional(readOnly = true)
 	public List<Especialidad> findAll() {
 		return (List<Especialidad>) especialidadDao.findAll();
+	}
+	@Override
+	public List<Especialidad> listarActivos() {
+		return (List<Especialidad>) especialidadDao.findAllByActivo(true);
 	}
 	
 	@Override

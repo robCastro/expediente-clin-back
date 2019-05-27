@@ -12,4 +12,6 @@ public interface IGeneroDao extends CrudRepository<Genero, Integer> {
 	public List<Genero> findAllByActivo(boolean activo);
 	
 	public Genero findFirstByOrderByIdDesc();
+	
+	
 }

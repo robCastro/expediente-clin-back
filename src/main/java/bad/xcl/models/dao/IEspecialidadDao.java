@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 import bad.xcl.models.entity.Especialidad;
+import bad.xcl.models.entity.EstadoCivil;
 
 public interface IEspecialidadDao extends CrudRepository<Especialidad, Integer> {
 	
@@ -12,6 +13,6 @@ public interface IEspecialidadDao extends CrudRepository<Especialidad, Integer> 
 	
 	public Especialidad findFirstByOrderByIdDesc();
 	
-	
+
 	
 }

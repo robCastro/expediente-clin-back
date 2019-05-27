@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.entity.Especialidad;
 import bad.xcl.models.entity.Genero;
 import bad.xcl.models.services.IGeneroService;
 
@@ -27,10 +28,10 @@ public class GeneroRestController {
 	@Autowired
 	private IGeneroService generoService;
 	
-	//Buscar Todos
+	//Buscar Todos Activos
 	@GetMapping("/lista")
-	public List<Genero> index(){
-		return generoService.findAll();
+	public List<Genero> listarActivos(){
+		return generoService.listarActivos();
 	}
 	
 	@GetMapping("genero/{id}")

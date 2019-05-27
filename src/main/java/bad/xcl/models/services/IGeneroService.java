@@ -2,6 +2,7 @@ package bad.xcl.models.services;
 
 import java.util.List;
 
+import bad.xcl.models.entity.Especialidad;
 import bad.xcl.models.entity.Genero;
 
 public interface IGeneroService {
@@ -14,6 +15,8 @@ public interface IGeneroService {
 	public Genero save(Genero genero);
 	
 	public Genero guardarGenero(Genero genero);
+	
+	public List<Genero> listarActivos();
 	
 	public List<Genero> listarGeneros();
 	

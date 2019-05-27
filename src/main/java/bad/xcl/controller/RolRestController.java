@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import bad.xcl.models.dao.IRolDao;
 import bad.xcl.models.entity.Rol;
 import bad.xcl.models.services.IRolService;
 
+@CrossOrigin(origins= {"http://localhost:4200/"})
 @RestController
 @RequestMapping("/rol/")
 public class RolRestController {

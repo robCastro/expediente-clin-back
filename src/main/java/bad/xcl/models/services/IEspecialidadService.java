@@ -3,6 +3,7 @@ package bad.xcl.models.services;
 import java.util.List;
 
 import bad.xcl.models.entity.Especialidad;
+import bad.xcl.models.entity.EstadoCivil;
 
 public interface IEspecialidadService {
 	public Especialidad findById(int id);
@@ -10,11 +11,11 @@ public interface IEspecialidadService {
 	
 	public List<Especialidad> findAll();
 	
-	//Para actualizar
 	public Especialidad save(Especialidad especialidad);
 	
-	//Para guardar, genera PK
 	public Especialidad guardarEspecialidad(Especialidad especialidad);
+	
+	public List<Especialidad> listarActivos();
 	
 	public List<Especialidad> listarEspecialidad(Integer id);
 	

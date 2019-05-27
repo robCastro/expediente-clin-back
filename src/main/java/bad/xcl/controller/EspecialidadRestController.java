@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.entity.Especialidad;
+import bad.xcl.models.entity.EstadoCivil;
 import bad.xcl.models.services.IEspecialidadService;
 
+@CrossOrigin(origins= {"http://localhost:4200/"})
 @RestController
 @RequestMapping("/especialidad")
 public class EspecialidadRestController {
@@ -28,11 +31,12 @@ public class EspecialidadRestController {
 	@Autowired
 	private IEspecialidadService especialidadService;
 	
-	//Buscar Todos
+	//Buscar Todos Activos
 	@GetMapping("/lista")
-	public List<Especialidad> index(){
-		return especialidadService.findAll();
+	public List<Especialidad> listarActivos(){
+		return especialidadService.listarActivos();
 	}
+	
 	
 	@GetMapping("especialidad/{id}")
 	public ResponseEntity<?> show(@PathVariable Integer id) {
