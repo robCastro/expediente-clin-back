@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bad.xcl.models.entity.EstadoCivil;
 import bad.xcl.models.services.IEstadoCivilService;
 
+@CrossOrigin(origins= {"http://localhost:4200"})
 @RestController
 @RequestMapping("/estado_civil")
 public class EstadoCivilRestController {
@@ -129,5 +131,31 @@ public class EstadoCivilRestController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
 	
+	//Actualizar estado civil.
+	@PutMapping("/eliminar/{id}")
+	public ResponseEntity<?> eliminarLogicamente(@RequestBody EstadoCivil estadoCivil, @PathVariable Integer id){
+		EstadoCivil estadoCivilActual = estadoCivilService.findById(id);
+		EstadoCivil estadoCivilUpdated = null;
+		Map<String, Object> response  = new HashMap<>();
+		
+		if(estadoCivilActual == null) {
+			response.put("mensaje","Error, no se puede editar: El estado civil con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		try {
+			estadoCivilActual.setActivo(false);
+			estadoCivilUpdated = estadoCivilService.save(estadoCivilActual);
+		} catch (DataAccessException e) {
+			response.put("mensaje","Error al realizar al actualizar en la base de datos.");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje", "El estado civil ha sido eliminado con éxito");
+		response.put("estado", estadoCivilUpdated);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
 	
 }
