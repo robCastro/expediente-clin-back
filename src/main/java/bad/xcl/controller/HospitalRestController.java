@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,7 @@ import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Rol;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IHospitalService;
+import bad.xcl.models.services.IMensajeService;
 
 @CrossOrigin(origins= {"http://localhost:4200"})
 @RestController
@@ -39,6 +41,7 @@ public class HospitalRestController {
 	private IUsuarioDao usuarioDao;
 	@Autowired
 	private IRolDao rolDao;
+	
 	
 	//Listado de Hospitales Aprobados filtrados por el usuario administrador de hospital que lo creo.
 	@GetMapping("usuarios/aprobados")
