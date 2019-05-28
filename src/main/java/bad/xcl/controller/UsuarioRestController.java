@@ -152,4 +152,28 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
+	//Habilitar usuario
+	@PutMapping("deshabilitar/{id}")
+	public ResponseEntity<?> deshabilitarUsuario(@RequestBody Usuario usuario, @PathVariable Integer id) {
+		Map<String, Object> response = new HashMap<>();
+		Usuario usuarioActual = usuarioService.findById(id);
+		if(usuarioActual == null) {
+			response.put("mensaje", "Error, no se pudo deshabilitar, el usuario ".concat(id.toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		Usuario usuarioActualizado = null;
+		usuarioActual.setEnabled(false);
+		try {
+			usuarioActualizado = usuarioService.save(usuarioActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al deshabilitar el estado en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El usuario ha sido deshabilitado con exito");
+		response.put("usuario", usuarioActualizado);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
+	
 }

@@ -1,5 +1,6 @@
 package bad.xcl.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.dao.IRolDao;
+import bad.xcl.models.dao.IUsuarioDao;
 import bad.xcl.models.entity.Hospital;
+import bad.xcl.models.entity.Rol;
+import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IHospitalService;
 
 @CrossOrigin(origins= {"http://localhost:4200"})
@@ -29,20 +34,55 @@ public class HospitalRestController {
 
 	@Autowired
 	private IHospitalService hospitalService;
+
+	@Autowired
+	private IUsuarioDao usuarioDao;
+	@Autowired
+	private IRolDao rolDao;
 	
-	//Hospitales aprobados.
+	//Listado de Hospitales Aprobados filtrados por el usuario administrador de hospital que lo creo.
+	@GetMapping("usuarios/aprobados")
+	public List<Usuario> aprobadosPorUser(){
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(1, "ROLE_Administrador Hospital")) {
+			usuarios.add(usuario);		
+		}
+		return usuarios;
+	}
+	
+	//Listado de Hospitales Denegados filtrados por el usuario administrador de hospital que lo creo.
+	@GetMapping("usuarios/denegados")
+	public List<Usuario> denegadosPorUser(){
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(0, "ROLE_Administrador Hospital")) {
+			usuarios.add(usuario);		
+		}
+		return usuarios;
+	}
+
+	//Listado de Hospitales Pendientes filtrados por el usuario administrador de hospital que lo creo.
+	@GetMapping("usuarios/pendientes")
+	public List<Usuario> pendientesPorUser(){
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		for (Usuario usuario : usuarioDao.listarHospitalesPendientes("ROLE_Administrador Hospital")) {
+			usuarios.add(usuario);		
+		}
+		return usuarios;
+	}
+	
+	//Hospitales aprobados (Unicamente devuelve el hospital sin el usuario)
 	@GetMapping("/aprobados")
 	public List<Hospital> aprobados(){
 		return hospitalService.listarAprobados();
 	}
 	
-	//Hospitales pendientes.
+	//Hospitales pendientes (Unicamente devuelve el hospital sin el usuario)
 	@GetMapping("/pendientes")
 	public List<Hospital> pendientes(){
 		return hospitalService.listarPendientes();
 	}
 
-	//Hospitales denegados.
+	//Hospitales denegados (Unicamente devuelve el hospital sin el usuario)
 	@GetMapping("/denegados")
 	public List<Hospital> denegados(){
 		return hospitalService.listarDenegados();
@@ -147,6 +187,60 @@ public class HospitalRestController {
 		}
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 		
+	}
+	
+	//Habilitar hospital de pendiente (aprobado = null) a aprobado (aprobado = true).
+	@PutMapping("habilitar/{id}")
+	public ResponseEntity<?> habilitarHospital(@RequestBody Hospital hospital, @PathVariable Integer id) {
+		Hospital hospitalActual = hospitalService.findById(id);
+		Hospital hospitalUpdated = null;
+		Map<String, Object> response  = new HashMap<>();
+		
+		if(hospitalActual == null) {
+			response.put("mensaje","Error, no se puede habilitar: El hospital con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
+		}
+		try {	
+			hospitalActual.setAprobado(true);
+
+			hospitalUpdated = hospitalService.save(hospitalActual);
+		} catch (DataAccessException e) {
+			response.put("mensaje","Error al realizar al habilitar el hospital en la base de datos.");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+		response.put("mensaje", "El hospital ha sido habilitado con éxito");
+		response.put("estado", hospitalUpdated);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	//Denegar hospital de pendiente (aprobado = null) a denegado (aprobado = false).
+	@PutMapping("denegar/{id}")
+	public ResponseEntity<?> denegarHospital(@RequestBody Hospital hospital, @PathVariable Integer id) {
+		Hospital hospitalActual = hospitalService.findById(id);
+		Hospital hospitalUpdated = null;
+		Map<String, Object> response  = new HashMap<>();
+		
+		if(hospitalActual == null) {
+			response.put("mensaje","Error, no se puede denegar: El hospital con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
+		}
+		try {	
+			hospitalActual.setAprobado(false);
+
+			hospitalUpdated = hospitalService.save(hospitalActual);
+		} catch (DataAccessException e) {
+			response.put("mensaje","Error al realizar al denegar el hospital en la base de datos.");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+		response.put("mensaje", "El hospital ha sido denegado con éxito");
+		response.put("estado", hospitalUpdated);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
 }

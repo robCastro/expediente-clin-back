@@ -17,4 +17,22 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 		nativeQuery = true
 	)
 	public List<Usuario> listarRaw();
+
+	@Query(
+		value = "select * from usuario join (select * from hospital where aprobado_hospital = ?1) h on (usuario.id_hospital = h.id_hospital) where id_usuario in (\r\n" + 
+				"select id_usuario from usuario natural join usuarios_roles natural join rol where nombre_rol like ?2)",
+		nativeQuery = true
+	)
+	public List<Usuario> listarUsuarioPorHospital(Integer aprobado, String nombre);
+
+	//Lista de hospitales por sus respectivos Administradores de Hospital con aprobado_hospital is null.
+	@Query(
+		value = "select * from usuario join (select * from hospital where aprobado_hospital is null) h on (usuario.id_hospital = h.id_hospital) where id_usuario in (\r\n" + 
+					"select id_usuario from usuario natural join usuarios_roles natural join rol where nombre_rol like ?1)",
+		nativeQuery = true
+	)
+	public List<Usuario> listarHospitalesPendientes(String nombre);
+	
+	public List<Usuario> findAllByHospital_Aprobado(boolean enabled);
+	
 }

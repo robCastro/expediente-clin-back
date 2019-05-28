@@ -15,4 +15,7 @@ public interface IRolDao extends CrudRepository<Rol, Integer> {
 			nativeQuery = true
 	)
 	public List<Rol> listarRaw();
+	
+	public Rol findByNombre(String nombre);
+	
 }
