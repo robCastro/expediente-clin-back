@@ -17,4 +17,16 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 		nativeQuery = true
 	)
 	public List<Usuario> listarRaw();
+	
+	@Query(
+			value="select count(*) from usuario u where u.username like ?1%",
+			nativeQuery = true
+		)
+		public 
+		Integer generarUser(String apellidosUsuario);
+	
+	
 }
+
+	
+
