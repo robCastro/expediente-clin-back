@@ -1,0 +1,75 @@
+package bad.xcl.models.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "paciente")
+public class Paciente implements Serializable {
+	
+	@Id
+	@Column(name = "id_paciente")
+	private Integer id;
+	@Column(name = "nombres_emergencia", length = 128, nullable = false)
+	private String nombres;
+	@Column(name = "apellidos_emergencia", length = 128, nullable = false)
+	private String apellidos;
+	@Column(name = "telefono_emergencia", length = 15)
+	private String telefono;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "id_usuario", nullable=true) //Permite nulos para usuario
+	@Size(min=0, max=1)
+	private Usuario usuario;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	private static final long serialVersionUID = 1L;
+	
+}
