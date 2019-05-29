@@ -198,5 +198,15 @@ public class UsuarioRestController {
 		}	
 		return usuarios;
 	}
+
+	//Usuarios bloqueados de un hospital especifico.
+	@GetMapping("bloqueado/hospital/{id}")
+	public List<Usuario> usuariosBloqueadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosBloqueadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}	
+		return usuarios;
+	}
 	
 }

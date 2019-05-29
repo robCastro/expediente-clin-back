@@ -30,7 +30,14 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
 			nativeQuery = true
 		)
-	public List<Usuario> usuariosDeshabilitadosPorHospital(Integer id_hospital);		
+	public List<Usuario> usuariosDeshabilitadosPorHospital(Integer id_hospital);
+	
+	@Query(
+			value = "select * from usuario u where u.enabled is null and u.id_usuario not in(select id_usuario from usuarios_roles uu where uu.id_rol in (1,2)) \r\n" + 
+					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
+			nativeQuery = true
+		)
+	public List<Usuario> usuariosBloqueadosPorHospital(Integer id_hospital);
 	
 	@Query(
 		value = "select * from usuario join (select * from hospital where aprobado_hospital = ?1 and activo_hospital = 1) h on (usuario.id_hospital = h.id_hospital) where id_usuario in (\r\n" + 
