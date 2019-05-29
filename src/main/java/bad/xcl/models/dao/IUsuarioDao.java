@@ -56,4 +56,16 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 	
 	public List<Usuario> findAllByHospital_Aprobado(boolean enabled);
 	
+	
+	@Query(
+			value="select count(*) from usuario u where u.username like ?1%",
+			nativeQuery = true
+		)
+		public 
+		Integer generarUser(String apellidosUsuario);
+	
+	
 }
+
+	
+

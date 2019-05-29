@@ -27,3 +27,5 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+bin/src/main/java/bad/xcl/models/services/UsuarioService.class
+bin/

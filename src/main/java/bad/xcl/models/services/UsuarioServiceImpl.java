@@ -1,5 +1,6 @@
 package bad.xcl.models.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	
 	@Override
 	public Usuario guardar(Usuario usuario) {
-		usuario.setId(this.generarId());
+		usuario.setId(this.generarId());	
+		usuario.setUsername(this.generarUsuario(usuario.getApellidos()));
+		SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
+		String contra= formato.format(usuario.getFecha());
+		usuario.setPassword(contra);
 		return usuarioDao.save(usuario);
 	}
 
@@ -52,6 +57,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public List<Usuario> listar() {
 		return (List<Usuario>) usuarioDao.findAll();
+	}
+	
+	@Override
+	public String generarUsuario(String apellido) {
+		apellido=apellido.toLowerCase();
+		Integer corre=usuarioDao.generarUser(apellido)+1;
+		String user= apellido+Integer.toString(corre);
+		System.out.print(Integer.toString(corre));
+		
+			return user;
+		
 	}
 
 }
