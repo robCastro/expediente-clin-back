@@ -267,9 +267,34 @@ public class HospitalRestController {
 			response.put("mensaje", "El departamento " + id + " no fue asignado a ningun hospital.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Integer>(id_departamento, HttpStatus.OK);	
-
+		return new ResponseEntity<Integer>(id_departamento, HttpStatus.OK);			
+	}
+	
+	//Desactivar hospital (activo = false)
+	@PutMapping("desactivar/{id}")
+	public ResponseEntity<?> desactivarHospital(@RequestBody Hospital hospital, @PathVariable Integer id) {
+		Hospital hospitalActual = hospitalService.findById(id);
+		Hospital hospitalUpdated = null;
+		Map<String, Object> response  = new HashMap<>();
 		
+		if(hospitalActual == null) {
+			response.put("mensaje","Error, no se puede desactivar el hospital con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
+		}
+		try {	
+			hospitalActual.setActivo(false);
+
+			hospitalUpdated = hospitalService.save(hospitalActual);
+		} catch (DataAccessException e) {
+			response.put("mensaje","Error al realizar al desactivar el hospital en la base de datos.");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	
+		response.put("mensaje", "El hospital ha sido desactivado con éxito");
+		response.put("estado", hospitalUpdated);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
 }
