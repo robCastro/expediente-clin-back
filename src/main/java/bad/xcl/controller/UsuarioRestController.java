@@ -1,5 +1,6 @@
 package bad.xcl.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.dao.IUsuarioDao;
+import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IUsuarioService;
 
@@ -174,6 +176,27 @@ public class UsuarioRestController {
 		response.put("mensaje", "El usuario ha sido deshabilitado con exito");
 		response.put("usuario", usuarioActualizado);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
+	
+	
+	//Usuarios habilitados de un hospital especifico.
+	@GetMapping("habilitado/hospital/{id}")
+	public List<Usuario> usuariosHabilitadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosHabilitadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}
+		return usuarios;
+	}
+	
+	//Usuarios deshabilitados de un hospital especifico.
+	@GetMapping("deshabilitado/hospital/{id}")
+	public List<Usuario> usuariosDeshabilitadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosDeshabilitadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}	
+		return usuarios;
 	}
 	
 }
