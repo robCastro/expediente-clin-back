@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.dao.IHospitalDao;
 import bad.xcl.models.dao.IRolDao;
 import bad.xcl.models.dao.IUsuarioDao;
+import bad.xcl.models.entity.Departamento;
 import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Rol;
 import bad.xcl.models.entity.Usuario;
@@ -37,10 +39,13 @@ public class HospitalRestController {
 	@Autowired
 	private IHospitalService hospitalService;
 
+	//Daos.
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	@Autowired
 	private IRolDao rolDao;
+	@Autowired
+	private IHospitalDao hospitalDao;
 	
 	
 	//Listado de Hospitales Aprobados filtrados por el usuario administrador de hospital que lo creo.
@@ -244,6 +249,27 @@ public class HospitalRestController {
 		response.put("estado", hospitalUpdated);
 		
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("departamento/{id}")
+	public ResponseEntity<?> showDepto(@PathVariable Integer id) {
+		Integer id_departamento = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			id_departamento = hospitalDao.departamentoDelHospital(id);
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta a la Base de Datos");
+			response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(id_departamento == null) {
+			response.put("mensaje", "El departamento " + id + " no fue asignado a ningun hospital.");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Integer>(id_departamento, HttpStatus.OK);	
+
+		
 	}
 	
 }
