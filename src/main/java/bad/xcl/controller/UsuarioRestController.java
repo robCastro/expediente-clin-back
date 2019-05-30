@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +26,7 @@ import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IUsuarioService;
 
-@CrossOrigin(origins= {"http://localhost:4200/"})
+@CrossOrigin(origins= {"http://localhost:4200"})
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioRestController {
@@ -35,10 +37,19 @@ public class UsuarioRestController {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
+	
 	@GetMapping("/todos")
 	public List<Usuario> index(){
 		//return usuarioService.listar();
 		return usuarioDao.listarRaw();
+	}
+	
+	@GetMapping("/actual")
+	public Usuario usuarioActual() {
+		String usernameActual = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		return usuarioService.usuarioPorUsername(usernameActual);
 	}
 	
 	@GetMapping("/{id}")
@@ -62,9 +73,11 @@ public class UsuarioRestController {
 	
 	@PostMapping("/crear")
 	public ResponseEntity<?> create(@RequestBody Usuario usuario) {
-		Usuario usuarioNew = null;
-		usuario.setEnabled(true);
 		Map<String, Object> response = new HashMap<>();
+		String rawPassword = usuario.getPassword();
+		if(isPasswordValida(rawPassword)) {
+		Usuario usuarioNew = null;
+		usuario.setPassword(passEncoder.encode(rawPassword));
 		try {
 			usuarioNew = usuarioService.guardar(usuario);
 		}
@@ -77,7 +90,13 @@ public class UsuarioRestController {
 		response.put("usuario", usuarioNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+		else {
+			response.put("mensaje", "Error al crear usuario, contraseña insegura");
+			response.put("usuario", usuario);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
+	}
+		
 	//No actualiza username ni contrasenia
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Integer id) {
@@ -208,5 +227,29 @@ public class UsuarioRestController {
 		}	
 		return usuarios;
 	}
+	
+	private boolean isPasswordValida(String password) {
+		int contNumeros = 0;
+		int contMayusculas = 0;
+		int contMinusculas = 0;
+		if(password.length() < 8) 
+			return false;
+		for(int i = 0; i < password.length(); i++) {
+			char ch = password.charAt(i);
+			if (Character.isLowerCase(ch)) {
+				contMinusculas++;
+				continue;
+			}
+			if (Character.isUpperCase(ch)) {
+				contMayusculas++;
+				continue;
+			}
+			if (Character.isDigit(ch)) {
+				contNumeros++;
+			}
+		}
+		return contMayusculas>0 && contMinusculas>0 && contNumeros>0;
+	}
+
 	
 }

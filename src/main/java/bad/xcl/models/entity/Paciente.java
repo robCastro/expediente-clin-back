@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "paciente")
@@ -26,8 +25,7 @@ public class Paciente implements Serializable {
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "id_usuario", nullable=true) //Permite nulos para usuario
-	@Size(min=0, max=1)
+	@JoinColumn(name = "id_usuario", unique=true , nullable=true) //Permite nulos para usuario
 	private Usuario usuario;
 	
 	public Integer getId() {
