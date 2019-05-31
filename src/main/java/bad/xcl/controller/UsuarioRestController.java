@@ -73,11 +73,9 @@ public class UsuarioRestController {
 	
 	@PostMapping("/crear")
 	public ResponseEntity<?> create(@RequestBody Usuario usuario) {
-		Map<String, Object> response = new HashMap<>();
-		String rawPassword = usuario.getPassword();
-		if(isPasswordValida(rawPassword)) {
 		Usuario usuarioNew = null;
-		usuario.setPassword(passEncoder.encode(rawPassword));
+		usuario.setEnabled(true);
+		Map<String, Object> response = new HashMap<>();
 		try {
 			usuarioNew = usuarioService.guardar(usuario);
 		}
@@ -90,12 +88,7 @@ public class UsuarioRestController {
 		response.put("usuario", usuarioNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-		else {
-			response.put("mensaje", "Error al crear usuario, contraseña insegura");
-			response.put("usuario", usuario);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
-	}
+		
 		
 	//No actualiza username ni contrasenia
 	@PutMapping("/{id}")
@@ -228,28 +221,6 @@ public class UsuarioRestController {
 		return usuarios;
 	}
 	
-	private boolean isPasswordValida(String password) {
-		int contNumeros = 0;
-		int contMayusculas = 0;
-		int contMinusculas = 0;
-		if(password.length() < 8) 
-			return false;
-		for(int i = 0; i < password.length(); i++) {
-			char ch = password.charAt(i);
-			if (Character.isLowerCase(ch)) {
-				contMinusculas++;
-				continue;
-			}
-			if (Character.isUpperCase(ch)) {
-				contMayusculas++;
-				continue;
-			}
-			if (Character.isDigit(ch)) {
-				contNumeros++;
-			}
-		}
-		return contMayusculas>0 && contMinusculas>0 && contNumeros>0;
-	}
 
 	
 }
