@@ -9,7 +9,9 @@ import bad.xcl.models.entity.Departamento;
 import bad.xcl.models.entity.Hospital;
 
 public interface IHospitalDao extends CrudRepository<Hospital, Integer> {
+	
 	public List<Hospital> findAllByAprobado(boolean aprobado);
+	
 	public Hospital findFirstByOrderByIdDesc();
 
 	@Query(
@@ -24,4 +26,5 @@ public interface IHospitalDao extends CrudRepository<Hospital, Integer> {
 			nativeQuery = true
 		)
 	public Integer departamentoDelHospital(Integer id_hospital);
+
 }

@@ -18,4 +18,8 @@ public interface IUsuarioService {
 	
 	public List<Usuario> listar();
 	
+	public String generarUsuario(String apellido);
+	
+	public Usuario usuarioPorUsername(String username);
+	
 }
