@@ -1,12 +1,14 @@
 package bad.xcl.models.services;
 
 import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bad.xcl.models.dao.IUsuarioDao;
+import bad.xcl.models.entity.Rol;
 import bad.xcl.models.entity.Usuario;
 
 @Service
@@ -30,7 +32,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		usuario.setId(this.generarId());	
 		usuario.setUsername(this.generarUsuario(usuario.getApellidos()));
 		SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
-		String contra= formato.format(usuario.getFecha());
+		Date fecha=usuario.getFecha();
+		String contra= formato.format(fecha);
 		usuario.setPassword(contra);
 		return usuarioDao.save(usuario);
 	}
