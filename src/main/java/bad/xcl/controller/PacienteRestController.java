@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.dao.IPacienteDao;
-import bad.xcl.models.entity.EstadoCivil;
 import bad.xcl.models.entity.Paciente;
 import bad.xcl.models.services.IPacienteService;
 import bad.xcl.models.services.IUsuarioService;
@@ -40,15 +39,55 @@ public class PacienteRestController {
 		return pacienteService.findAll();
 	}
 	
+	//Paciente con enabled = 1 y por el hospital id_hospital = id.
 	@GetMapping("/habilitados/{id}")	
 	public List<Paciente> pacientesHabilitadosPorHospital(@PathVariable Integer id){
 		List<Paciente> pacientes = new ArrayList<Paciente>();
-		for (Paciente paciente: pacienteDao.listarPacientesPorHospital(id)) {
+		for (Paciente paciente: pacienteDao.listarPacientesPorHospital(1,id)) {
+			pacientes.add(paciente);
+		}
+		return pacientes;
+	}
+	
+	//Paciente con enabled = 0 y por el hospital id_hospital = id.
+	@GetMapping("/inhabilitados/{id}")	
+	public List<Paciente> pacientesInabilitadosPorHospital(@PathVariable Integer id){
+		List<Paciente> pacientes = new ArrayList<Paciente>();
+		for (Paciente paciente: pacienteDao.listarPacientesPorHospital(0,id)) {
 			pacientes.add(paciente);
 		}
 		return pacientes;
 	}
 
+	//Paciente bloqueados (enabled is null) por el hospital id_hospital = id.
+	@GetMapping("/bloqueados/{id}")	
+	public List<Paciente> pacientesBloqueadosPorHospital(@PathVariable Integer id){
+		List<Paciente> pacientes = new ArrayList<Paciente>();
+		for (Paciente paciente: pacienteDao.listarPacientesBloqueadosPorHospital(id)) {
+			pacientes.add(paciente);
+		}
+		return pacientes;
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> show(@PathVariable Integer id) {
+		Paciente paciente = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			paciente = pacienteService.findById(id);
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta a la Base de Datos");
+			response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(paciente == null) {
+			response.put("mensaje", "El paciente con ID:" + id + " no existe.");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+	}
+	
 	//crear nuevo paciente
 	@PostMapping("/crear")
 	public ResponseEntity<?> create(@RequestBody Paciente paciente)
