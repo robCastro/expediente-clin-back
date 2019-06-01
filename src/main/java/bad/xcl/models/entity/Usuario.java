@@ -1,7 +1,7 @@
 package bad.xcl.models.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ public class Usuario implements Serializable {
 	private String username;
 	@Column(name = "password", nullable = false, length = 256)
 	private String password;
-	@Column(name = "enabled", nullable = false)
+	@Column(name = "enabled", nullable = true)
 	private Boolean enabled;
 	@Column(name = "nombres_usuario", nullable = false, length = 128)
 	private String nombres;
