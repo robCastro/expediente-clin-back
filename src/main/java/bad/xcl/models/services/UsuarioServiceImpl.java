@@ -69,5 +69,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			return user;
 		
 	}
+	
+	@Override
+	public Usuario usuarioPorUsername(String username) {
+		return usuarioDao.findByUsername(username);
+	}
+
 
 }

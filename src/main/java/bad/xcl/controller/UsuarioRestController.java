@@ -1,5 +1,6 @@
 package bad.xcl.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.dao.IUsuarioDao;
+import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IUsuarioService;
 
-@CrossOrigin(origins= {"http://localhost:4200/"})
+@CrossOrigin(origins= {"http://localhost:4200"})
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioRestController {
@@ -33,10 +37,19 @@ public class UsuarioRestController {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
+	
 	@GetMapping("/todos")
 	public List<Usuario> index(){
 		//return usuarioService.listar();
 		return usuarioDao.listarRaw();
+	}
+	
+	@GetMapping("/actual")
+	public Usuario usuarioActual() {
+		String usernameActual = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		return usuarioService.usuarioPorUsername(usernameActual);
 	}
 	
 	@GetMapping("/{id}")
@@ -93,7 +106,7 @@ public class UsuarioRestController {
 		response.put("usuario", usuarioNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+
 	//No actualiza username ni contrasenia
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Integer id) {
@@ -169,5 +182,62 @@ public class UsuarioRestController {
 		response.put("usuario", usuarioActualizado);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
+	
+	//Habilitar usuario
+	@PutMapping("deshabilitar/{id}")
+	public ResponseEntity<?> deshabilitarUsuario(@RequestBody Usuario usuario, @PathVariable Integer id) {
+		Map<String, Object> response = new HashMap<>();
+		Usuario usuarioActual = usuarioService.findById(id);
+		if(usuarioActual == null) {
+			response.put("mensaje", "Error, no se pudo deshabilitar, el usuario ".concat(id.toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		Usuario usuarioActualizado = null;
+		usuarioActual.setEnabled(false);
+		try {
+			usuarioActualizado = usuarioService.save(usuarioActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al deshabilitar el estado en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El usuario ha sido deshabilitado con exito");
+		response.put("usuario", usuarioActualizado);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
+	
+	
+	//Usuarios habilitados de un hospital especifico.
+	@GetMapping("habilitado/hospital/{id}")
+	public List<Usuario> usuariosHabilitadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosHabilitadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}
+		return usuarios;
+	}
+	
+	//Usuarios deshabilitados de un hospital especifico.
+	@GetMapping("deshabilitado/hospital/{id}")
+	public List<Usuario> usuariosDeshabilitadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosDeshabilitadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}	
+		return usuarios;
+	}
+
+	//Usuarios bloqueados de un hospital especifico.
+	@GetMapping("bloqueado/hospital/{id}")
+	public List<Usuario> usuariosBloqueadosPorHospital(@PathVariable Integer id){
+		List<Usuario> usuarios = new ArrayList<Usuario>();			
+		for (Usuario usuario : usuarioDao.usuariosBloqueadosPorHospital(id)) {
+			usuarios.add(usuario);		
+		}	
+		return usuarios;
+	}
+	
+
 	
 }

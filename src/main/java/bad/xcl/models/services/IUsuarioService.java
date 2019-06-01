@@ -20,4 +20,6 @@ public interface IUsuarioService {
 	
 	public String generarUsuario(String apellido);
 	
+	public Usuario usuarioPorUsername(String username);
+	
 }
