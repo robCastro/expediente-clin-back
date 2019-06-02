@@ -2,6 +2,7 @@ package bad.xcl.models.services;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		usuario.setId(this.generarId());	
 		usuario.setUsername(this.generarUsuario(usuario.getApellidos()));
 		SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
+		formato.setTimeZone(TimeZone.getTimeZone("UTC"));
 		String contra= formato.format(usuario.getFecha());
 		usuario.setPassword(contra);
 		return usuarioDao.save(usuario);
