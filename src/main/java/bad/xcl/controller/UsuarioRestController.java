@@ -89,7 +89,25 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 		
-		
+	@PostMapping("/crearPaciente")
+	public ResponseEntity<?> create_inactivo(@RequestBody Usuario usuario) {
+		Usuario usuarioNew = null;
+		usuario.setEnabled(true);
+		Map<String, Object> response = new HashMap<>();
+		try {
+			usuarioNew = usuarioService.guardar(usuario);
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert a la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El usuario ha sido creado con exito");
+		response.put("usuario", usuarioNew);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}	
+	
+	
 	//No actualiza username ni contrasenia
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Integer id) {
