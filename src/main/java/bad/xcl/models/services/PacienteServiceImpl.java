@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import bad.xcl.models.dao.IPacienteDao;
-import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Paciente;
 
 @Service

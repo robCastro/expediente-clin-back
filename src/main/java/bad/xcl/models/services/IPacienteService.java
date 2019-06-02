@@ -15,5 +15,5 @@ public interface IPacienteService {
 	public Paciente save(Paciente paciente);
 	
 	public void delete(int id);
-
+	
 }
