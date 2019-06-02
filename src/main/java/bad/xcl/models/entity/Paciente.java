@@ -22,6 +22,8 @@ public class Paciente implements Serializable {
 	private String apellidos;
 	@Column(name = "telefono_emergencia", length = 15)
 	private String telefono;
+	@Column(name = "activo", nullable = true)
+	private Boolean activo;
 	
 	
 	@ManyToOne
@@ -68,6 +70,14 @@ public class Paciente implements Serializable {
 		this.usuario = usuario;
 	}
 	
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 }
