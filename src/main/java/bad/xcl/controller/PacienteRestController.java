@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -108,6 +109,54 @@ public class PacienteRestController {
 		response.put("estado", pacienteNuevo);
 		
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	//Habilitar paciente
+	@PutMapping("activar/{id}")
+	public ResponseEntity<?> activarPaciente(@RequestBody Paciente paciente, @PathVariable Integer id) {
+		Map<String, Object> response = new HashMap<>();
+		Paciente pacienteActual = pacienteService.findById(id);
+		if(pacienteActual == null) {
+			response.put("mensaje", "Error, no se pudo habilitar, el paciente:".concat(id.toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		Paciente pacienteActualizado = null;
+		pacienteActual.setActivo(true);
+		try {
+			pacienteActualizado = pacienteService.save(pacienteActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al habilitar el estado en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El paciente ha sido habilitado con exito");
+		response.put("paciente", pacienteActualizado);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
+	
+	//Deshabilitar paciente
+	@PutMapping("desactivar/{id}")
+	public ResponseEntity<?> desactivarPaciente(@RequestBody Paciente paciente, @PathVariable Integer id) {
+		Map<String, Object> response = new HashMap<>();
+		Paciente pacienteActual = pacienteService.findById(id);
+		if(pacienteActual == null) {
+			response.put("mensaje", "Error, no se pudo habilitar, el paciente:".concat(id.toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		Paciente pacienteActualizado = null;
+		pacienteActual.setActivo(false);
+		try {
+			pacienteActualizado = pacienteService.save(pacienteActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al habilitar el estado en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El paciente ha sido habilitado con exito");
+		response.put("paciente", pacienteActualizado);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
 }
