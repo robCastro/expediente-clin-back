@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import bad.xcl.models.entity.EstadoCivil;
 import bad.xcl.models.entity.HistorialClinico;
 import bad.xcl.models.services.IHistorialClinicoService;
 
@@ -90,6 +91,28 @@ public class HistorialClinicoRestController {
 		}
 		response.put("mensaje", "El historial clinico ha sido eliminado con exito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/uno/{id}")
+	public ResponseEntity<?> show(@PathVariable Integer id){
+		
+		HistorialClinico historial = null;
+		Map<String, Object> response  = new HashMap<>();
+		
+		try {
+			historial = historialService.findById(id);
+		} catch(DataAccessException e) {
+			response.put("mensaje","Error al realizar la consulta en la base de datos.");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(historial == null) {
+			response.put("mensaje","El historial con el ID:".concat(id.toString()).concat(" no existe en la base de datos"));
+			return new ResponseEntity<Map>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<HistorialClinico>(historial, HttpStatus.OK);
 	}
 
 }
