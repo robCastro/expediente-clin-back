@@ -14,7 +14,7 @@ public class Rol implements Serializable {
 	@Id
 	@Column(name = "id_rol")
 	private Integer id;
-	@Column(name = "nombre_rol", length = 128, nullable = false)
+	@Column(name = "nombre_rol", length = 20, nullable = false)
 	private String nombre;
 	public Integer getId() {
 		return id;

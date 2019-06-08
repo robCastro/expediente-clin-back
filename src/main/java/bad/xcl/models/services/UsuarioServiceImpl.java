@@ -6,6 +6,7 @@ import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import bad.xcl.models.dao.IUsuarioDao;
 import bad.xcl.models.entity.Usuario;
@@ -15,6 +16,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
 	
 	@Override
 	public Integer generarId() {
@@ -33,7 +37,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		SimpleDateFormat formato= new SimpleDateFormat("dd/MM/yyyy");
 		formato.setTimeZone(TimeZone.getTimeZone("UTC"));
 		String contra= formato.format(usuario.getFecha());
-		usuario.setPassword(contra);
+		usuario.setPassword(passEncoder.encode(contra));
 		return usuarioDao.save(usuario);
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -67,7 +68,7 @@ public class Usuario implements Serializable {
 	
 	@ManyToMany
 	@JoinTable(
-		name = "usuarios_roles",
+		name = "users_authorities",
 		joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),
 		inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
 	)
