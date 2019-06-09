@@ -52,7 +52,7 @@ public class HospitalRestController {
 	@GetMapping("usuarios/aprobados")
 	public List<Usuario> aprobadosPorUser(){
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(1, "ROLE_Administrador Hospital")) {
+		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(1, "ROLE_AdminHosp")) {
 			usuarios.add(usuario);		
 		}
 		return usuarios;
@@ -62,7 +62,7 @@ public class HospitalRestController {
 	@GetMapping("usuarios/denegados")
 	public List<Usuario> denegadosPorUser(){
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(0, "ROLE_Administrador Hospital")) {
+		for (Usuario usuario : usuarioDao.listarUsuarioPorHospital(0, "ROLE_AdminHosp")) {
 			usuarios.add(usuario);		
 		}
 		return usuarios;
@@ -72,7 +72,7 @@ public class HospitalRestController {
 	@GetMapping("usuarios/pendientes")
 	public List<Usuario> pendientesPorUser(){
 		List<Usuario> usuarios = new ArrayList<Usuario>();
-		for (Usuario usuario : usuarioDao.listarHospitalesPendientes("ROLE_Administrador Hospital")) {
+		for (Usuario usuario : usuarioDao.listarHospitalesPendientes("ROLE_AdminHosp")) {
 			usuarios.add(usuario);		
 		}
 		return usuarios;
