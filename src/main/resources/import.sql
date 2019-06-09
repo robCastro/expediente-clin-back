@@ -507,8 +507,8 @@ INSERT INTO hospital(id_hospital, id_municipio, id_pais, nombre_hospital, fecha_
 
 
 
-INSERT INTO rol(id_rol, nombre_rol)  VALUES(1, 'ROLE_Administrador General');
-INSERT INTO rol(id_rol, nombre_rol)  VALUES(2, 'ROLE_Administrador Hospital');
+INSERT INTO rol(id_rol, nombre_rol)  VALUES(1, 'ROLE_AdminGen');
+INSERT INTO rol(id_rol, nombre_rol)  VALUES(2, 'ROLE_AdminHosp');
 INSERT INTO rol(id_rol, nombre_rol)  VALUES(3, 'ROLE_Medico');
 INSERT INTO rol(id_rol, nombre_rol)  VALUES(4, 'ROLE_Enfermero');
 INSERT INTO rol(id_rol, nombre_rol)  VALUES(5, 'ROLE_Recepcionista');
