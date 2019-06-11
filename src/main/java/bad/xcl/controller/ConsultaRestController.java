@@ -45,7 +45,7 @@ public class ConsultaRestController {
 		return new ResponseEntity<Consulta>(consulta, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("signos_vitales/{id}")
 	public ResponseEntity<?> updateSignos(@RequestBody Consulta consulta) {
 		Map<String, Object> response = new HashMap<>();
 		Consulta consultaActual = consultaService.findById(consulta.getId());
