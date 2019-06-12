@@ -71,6 +71,26 @@ public class UsuarioRestController {
 		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
 	}
 	
+	@GetMapping("/username/{username}")
+	public ResponseEntity<?> showUser(@PathVariable String username) {
+		Usuario usuario = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			usuario = usuarioDao.findByUsername(username);
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta a la Base de Datos");
+			response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		if(usuario == null) {
+			response.put("mensaje", "El usuario " + username + " no existe.");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+	}
+	
+	
 	@PostMapping("/crear")
 	public ResponseEntity<?> create(@RequestBody Usuario usuario) {
 		Usuario usuarioNew = null;
