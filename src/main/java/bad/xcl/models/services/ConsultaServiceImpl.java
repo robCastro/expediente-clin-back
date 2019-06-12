@@ -21,5 +21,17 @@ public class ConsultaServiceImpl implements IConsultaService{
 	public Consulta findById(Integer id) {
 		return consultaDao.findById(id).orElse(null);
 	}
+	
+	@Override
+	public int generarId() {
+		try {
+			//Obtiene el id mayor y le agrega uno
+			return consultaDao.findFirstByOrderByIdDesc().getId() + 1;
+		}
+		//En caso que NO hayan registros en la tabla
+		catch(NullPointerException e) {
+			return 1;
+		}
+	}
 
 }

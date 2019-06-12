@@ -1,6 +1,7 @@
 package bad.xcl.models.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "consulta")
@@ -17,7 +20,7 @@ public class Consulta implements Serializable {
 	@Column(name = "id_consulta")
 	private Integer id;
 	
-	@Column(name = "fecha_consulta")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
 	@Column(name = "hora_consulta")

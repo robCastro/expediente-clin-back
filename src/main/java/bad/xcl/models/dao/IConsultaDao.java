@@ -6,4 +6,5 @@ import bad.xcl.models.entity.Consulta;
 
 public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 
+	public Consulta findFirstByOrderByIdDesc();
 }
