@@ -51,7 +51,9 @@ public class Consulta implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario; //Usuario que dará la consulta
 
-	
+	@ManyToOne
+	@JoinColumn(name = "id_enfermedad", nullable = true)
+	private Enfermedad enfermedad;
 	
 	public Integer getId() {
 		return id;
@@ -141,6 +143,12 @@ public class Consulta implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	
+	public Enfermedad getEnfermedad(){
+		return enfermedad;
+	}
+
+	public void setEnfermedad(Enfermedad enfermedad){
+		this.enfermedad = enfermedad;
+	}
 	private static final long serialVersionUID = 1L;
 }
