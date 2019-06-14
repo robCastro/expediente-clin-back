@@ -23,6 +23,7 @@ public class Consulta implements Serializable {
 	@Column(name = "id_consulta")
 	private Integer id;
 	
+	@Column(name = "fecha_consulta")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
