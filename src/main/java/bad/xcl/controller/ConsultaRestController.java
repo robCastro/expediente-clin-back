@@ -1,12 +1,18 @@
 package bad.xcl.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,10 +52,18 @@ public class ConsultaRestController {
 		return new ResponseEntity<Consulta>(consulta, HttpStatus.OK);
 	}
 	
-	@PutMapping("/{id}")
-	public ResponseEntity<?> updateSignos(@RequestBody Consulta consulta) {
+	@PutMapping("signos_vitales/{id}")
+	public ResponseEntity<?> updateSignos(@Valid @RequestBody Consulta consulta, BindingResult result) {
 		Map<String, Object> response = new HashMap<>();
 		Consulta consultaActual = consultaService.findById(consulta.getId());
+		if(result.hasErrors()) {
+			List<String> errors = new ArrayList<>();
+			for( FieldError err: result.getFieldErrors()) {
+				errors.add(err.getDefaultMessage());
+			}
+			response.put("errors", errors);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
 		if(consultaActual == null) {
 			response.put("mensaje", "Error, no se pudo editar, la consulta ".concat(consulta.getId().toString()).concat(" no existe"));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);

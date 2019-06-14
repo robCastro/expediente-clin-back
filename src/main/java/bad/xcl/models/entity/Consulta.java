@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "consulta")
@@ -26,18 +29,27 @@ public class Consulta implements Serializable {
 	@Column(name = "hora_consulta")
 	private Integer hora; //Rangos de 0-23
 	
+	@Min(value=3, message="El peso minimo es 3")
+    @Max(value=200, message="El peso maximo es 200")
 	@Column(name = "peso", nullable = true)
 	private Double peso;
 	
+	@Min(value=30, message="La temperatura minima es 30")
+    @Max(value=40, message="La temperatura maxima es 40")
 	@Column(name = "temperatura", nullable = true)
 	private Double temperatura;
 	
+	@Min(value=40, message="La estatura minima es 40")
+    @Max(value=200, message="La estatura maxima es 200")
 	@Column(name = "estatura", nullable = true)
 	private Double estatura;
 	
+	@Pattern(regexp = "^1[0-4]{1}[0-9]{1}\\/[5-9]{1}[0-9]{1}$", message="Presion arterial incorrecta")
 	@Column(name = "presion_arterial", nullable = true, length = 25)
 	private String presion;
 	
+	@Min(value=40, message="El ritmo cardiaco minimo es 40")
+    @Max(value=120, message="El ritmo cardiaco maximo es 120")
 	@Column(name = "ritmo_cardiaco", nullable = true)
 	private Integer ritmo;
 	
@@ -54,7 +66,9 @@ public class Consulta implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario; //Usuario que dará la consulta
 
-	
+	@ManyToOne
+	@JoinColumn(name = "id_enfermedad", nullable = true)
+	private Enfermedad enfermedad;
 	
 	public Integer getId() {
 		return id;
@@ -144,6 +158,12 @@ public class Consulta implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	
+	public Enfermedad getEnfermedad(){
+		return enfermedad;
+	}
+
+	public void setEnfermedad(Enfermedad enfermedad){
+		this.enfermedad = enfermedad;
+	}
 	private static final long serialVersionUID = 1L;
 }

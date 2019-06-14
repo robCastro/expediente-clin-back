@@ -20,21 +20,21 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 	public List<Usuario> listarRaw();
 	
 	@Query(
-			value = "select * from usuario u where u.enabled = 1 and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2)) \r\n" + 
+			value = "select * from usuario u where u.enabled = 1 and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2,6)) \r\n" + 
 					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
 			nativeQuery = true
 		)
 	public List<Usuario> usuariosHabilitadosPorHospital(Integer id_hospital);	
 
 	@Query(
-			value = "select * from usuario u where u.enabled = 0 and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2)) \r\n" + 
+			value = "select * from usuario u where u.enabled = 0 and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2,6)) \r\n" + 
 					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
 			nativeQuery = true
 		)
 	public List<Usuario> usuariosDeshabilitadosPorHospital(Integer id_hospital);
 	
 	@Query(
-			value = "select * from usuario u where u.enabled is null and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2)) \r\n" + 
+			value = "select * from usuario u where u.enabled is null and u.id_usuario not in(select id_usuario from users_authorities uu where uu.id_rol in (1,2,6)) \r\n" + 
 					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
 			nativeQuery = true
 		)
