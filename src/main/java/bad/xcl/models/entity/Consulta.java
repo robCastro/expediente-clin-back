@@ -1,8 +1,7 @@
 package bad.xcl.models.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
@@ -24,7 +21,6 @@ public class Consulta implements Serializable {
 	private Integer id;
 	
 	@Column(name = "fecha_consulta")
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
 	@Column(name = "hora_consulta")

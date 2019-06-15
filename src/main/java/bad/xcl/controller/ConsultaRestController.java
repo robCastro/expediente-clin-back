@@ -87,35 +87,5 @@ public class ConsultaRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
-	//Crear una nueva cita.
-	@PostMapping("/crearCita")
-	public ResponseEntity<?> create(@RequestBody Consulta consulta) {
-		Consulta citaNueva = null;
-		Map<String, Object> response  = new HashMap<>();
-		
-		try {
-			consulta.setPeso(null);
-			consulta.setTemperatura(null);
-			consulta.setEstatura(null);
-			consulta.setPresion(null);
-			consulta.setRitmo(null);
-			consulta.setSintoma(null);
-			
-			consulta.setId(consultaService.generarId());
-			citaNueva = consultaService.save(consulta);
-			
-		} catch (DataAccessException e) {
-			response.put("mensaje","Error al realizar al insertar en la base de datos.");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		response.put("mensaje", "La cita y su consulta ha sido creado con éxito");
-		response.put("estado", citaNueva);
-		
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-	}
-	
-	
 
 }
