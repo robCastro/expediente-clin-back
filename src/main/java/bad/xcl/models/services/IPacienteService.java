@@ -16,4 +16,6 @@ public interface IPacienteService {
 	
 	public void delete(int id);
 	
+	public List<Object> listarPacientesBasicos(Integer id_hospital);
+	
 }

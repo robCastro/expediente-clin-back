@@ -1,4 +1,5 @@
-﻿INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (1, 'Ahuachapán');
+﻿
+INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (1, 'Ahuachapán');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (2, 'Santa Ana');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (3, 'Sonsonate');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (4, 'La Libertad');
@@ -524,9 +525,9 @@ INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, i
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(3, 3);
 INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario, id_especialidad) VALUES(4, 1, 54, 214, 1, 1, 'doc2_hos1', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Doctor2', 'Hospital1', '01-01-1970', 'Detalle Direccion', 'email4@email.com', '7272-1212', 2);
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(4, 3);
-INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario, id_especialidad) VALUES(5, 1, 54, 214, 1, 1, 'doc3_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Doctor3', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email5@email.com', '7272-1212', 1);
+INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario, id_especialidad) VALUES(5, 2, 54, 214, 1, 1, 'doc3_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Doctor3', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email5@email.com', '7272-1212', 1);
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(5, 3);
-INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario, id_especialidad) VALUES(6, 1, 54, 214, 1, 1, 'doc4_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Doctor4', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email6@email.com', '7272-1212', 2);
+INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario, id_especialidad) VALUES(6, 2, 54, 214, 1, 1, 'doc4_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Doctor4', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email6@email.com', '7272-1212', 2);
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(6, 3);
 INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(7, 1, 54, 214, 1, 1, 'rec_hos1', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Recepcionista', 'Hospital1', '01-01-1970', 'Detalle Direccion', 'email7@email.com', '7272-1212');
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(7, 5);

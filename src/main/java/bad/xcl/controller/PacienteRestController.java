@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.dao.IPacienteDao;
 import bad.xcl.models.entity.Especialidad;
-import bad.xcl.models.entity.EstadoCivil;import bad.xcl.models.entity.Hospital;
+import bad.xcl.models.entity.EstadoCivil;
+import bad.xcl.models.entity.Hospital;
 import bad.xcl.models.entity.Paciente;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IPacienteService;
@@ -189,5 +190,8 @@ public class PacienteRestController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 		}
 	
-	
+		@GetMapping("/datos/{id}")
+		public List<Object> listarPacienteBasico(@PathVariable Integer id){
+			return pacienteService.listarPacientesBasicos(id);
+		}
 }
