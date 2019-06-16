@@ -17,4 +17,5 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPorDoctor(Integer id_doctor, Integer id_hospital);
+		
 }

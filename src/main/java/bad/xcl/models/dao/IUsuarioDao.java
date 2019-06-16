@@ -63,8 +63,15 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 			nativeQuery = true
 		)
 		public 
-		Integer generarUser(String apellidosUsuario);
+	Integer generarUser(String apellidosUsuario);
 	
+	
+	@Query(
+			value = "select * from usuario u where u.enabled = 1 and u.id_usuario in(select id_usuario from users_authorities uu where uu.id_rol = 3 ) \r\n" + 
+					"and id_hospital = (select id_hospital from hospital where id_hospital = ?1)",
+			nativeQuery = true
+		)
+	public List<Usuario> doctoresPorHospital(Integer id_hospital);
 	
 }
 
