@@ -79,6 +79,16 @@ public class CitaRestController {
 		return consultas_citas;
 	}
 	
+	//Citas por Paciente.
+	@GetMapping("/paciente")
+	public List<Consulta> obtenerCitasPorPaciente(@RequestParam("id_paciente") Integer id_paciente, 
+								 @RequestParam("id_hospital") Integer id_hospital) {
+		List<Consulta> consultas_citas = new ArrayList<Consulta>();
+		for (Consulta consulta_cita: consultaDao.obtenerCitasPorPaciente(id_paciente, id_hospital)) {
+			consultas_citas.add(consulta_cita);
+		}
+		return consultas_citas;
+	}
 	@GetMapping("/doctores/hospital/{id}")
 	public List<Usuario> doctoresPorHospital(@PathVariable Integer id){
 		List<Usuario> usuarios = new ArrayList<Usuario>();
