@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bad.xcl.models.dao.IConsultaDao;
 import bad.xcl.models.entity.Consulta;
+import bad.xcl.models.entity.Paciente;
+import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IConsultaService;
 
 @CrossOrigin(origins= {"http://localhost:4200"})
@@ -86,7 +89,49 @@ public class CitaRestController {
 			consultas_citas.add(consulta_cita);
 		}
 		return consultas_citas;
+		
+		
 	}
+	
+	//listado de citas pendientes por hospital
+	@GetMapping("pendientes/{id}")
+	public List<Consulta> obtenerCitasPendientes(@PathVariable Integer id){
+		List<Consulta> consultas = new ArrayList<Consulta>();			
+		for (Consulta consulta : consultaDao.obtenerCitasPendientes(id)) {
+			consultas.add(consulta);		
+		}
+		return consultas;
+	}
+	
+	//listado de citas pasadas por hospital
+	@GetMapping("pasadas/{id}")
+	public List<Consulta> obtenerCitasPasadas(@PathVariable Integer id){
+		List<Consulta> consultas = new ArrayList<Consulta>();			
+		for (Consulta consulta : consultaDao.obtenerCitasPasadas(id)) {
+			consultas.add(consulta);		
+		}
+		return consultas;
+	}
+	
+	//listado de citas pendientes por doctor
+		@GetMapping("pendientesDoc/{id}")
+		public List<Consulta> obtenerCitasPendientesDoctor(@PathVariable Integer id){
+			List<Consulta> consultas = new ArrayList<Consulta>();			
+			for (Consulta consulta : consultaDao.obtenerCitasPendientesDoctor(id)) {
+				consultas.add(consulta);		
+			}
+			return consultas;
+		}
+		
+		//listado de citas pasadas por doctor
+		@GetMapping("pasadasDoc/{id}")
+		public List<Consulta> obtenerCitasPasadasDoctor(@PathVariable Integer id){
+			List<Consulta> consultas = new ArrayList<Consulta>();			
+			for (Consulta consulta : consultaDao.obtenerCitasPasadasDoctor(id)) {
+				consultas.add(consulta);		
+			}
+			return consultas;
+		}
 	
 
 }
