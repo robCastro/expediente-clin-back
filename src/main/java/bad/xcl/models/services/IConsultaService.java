@@ -9,4 +9,6 @@ public interface IConsultaService {
 	public Consulta findById(Integer id);
 	
 	public int generarId();
+	
+	public void delete(Integer id);
 }

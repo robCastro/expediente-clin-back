@@ -2,6 +2,7 @@ package bad.xcl.models.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import bad.xcl.models.dao.IConsultaDao;
 import bad.xcl.models.entity.Consulta;
@@ -32,6 +33,12 @@ public class ConsultaServiceImpl implements IConsultaService{
 		catch(NullPointerException e) {
 			return 1;
 		}
+	}
+	
+	@Override
+	@Transactional
+	public void delete(Integer id) {
+		consultaDao.deleteById(id);		
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bad.xcl.models.dao.IConsultaDao;
 import bad.xcl.models.dao.IUsuarioDao;
 import bad.xcl.models.entity.Consulta;
+import bad.xcl.models.entity.Enfermedad;
 import bad.xcl.models.entity.Usuario;
 import bad.xcl.models.services.IConsultaService;
 
@@ -98,6 +100,52 @@ public class CitaRestController {
 		return usuarios;
 	}
 	
+	//Eliminar fisicamente la cita. Si la consulta con los demas valores son nulos.
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> delete(@PathVariable Integer id){
+		Consulta cita = null;
+		Map<String, Object> response  = new HashMap<>();
+		try {
+			cita = consultaService.findById(id);
+			
+			if(cita == null) {
+				response.put("mensaje", "La cita con ID:" + id + " no existe.");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			} else {
+				Double peso = cita.getPeso();
+				Double temp = cita.getTemperatura();
+				Double estatura = cita.getEstatura();
+				String presion = cita.getPresion();
+				Integer ritmo = cita.getRitmo();
+				String sintoma = cita.getSintoma();
+				Enfermedad enf = cita.getEnfermedad();
+				
+				if (peso == null && temp == null && estatura == null && presion == null && ritmo == null && sintoma == null && enf == null) {
+					try {
+						consultaDao.deleteById(id);
+					} catch (DataAccessException e) {
+						response.put("mensaje","Error al eliminar en la base de datos.");
+						response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+						return new ResponseEntity<Map>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+					}
+					response.put("mensaje", "Cita eliminada con éxito.");
+					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+				} else {
+					response.put("mensaje", "No se puede eliminar una consulta.");
+					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+				}
+			
+			}
+			
+		}  catch(DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta a la base de datos");
+			response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		//response.put("mensaje", "La cita ha sido eliminado con éxito");
+		//return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+	}
 	
 
 }
