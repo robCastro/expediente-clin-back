@@ -17,9 +17,6 @@ public class Tratamiento implements Serializable {
 	@Column(name = "id_tratamiento")
 	private Integer id;
 	
-	@Column(name = "nombre_tratamiento", nullable = false)
-	private String nombre;
-	
 	@Column(name = "fecha_inicio_tra", nullable = false)
 	private Date fechaInicio;
 	
@@ -38,6 +35,10 @@ public class Tratamiento implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_consulta")
 	private Consulta consulta;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_medicamento")
+	private Medicamento medicamento;
 
 	
 
@@ -49,17 +50,6 @@ public class Tratamiento implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
 
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -109,5 +99,17 @@ public class Tratamiento implements Serializable {
 	public void setConsulta(Consulta consulta) {
 		this.consulta = consulta;
 	}
+	
+	
+	public Medicamento getMedicamento() {
+		return medicamento;
+	}
+
+
+	public void setMedicamento(Medicamento medicamento) {
+		this.medicamento = medicamento;
+	}
+
+
 	private static final long serialVersionUID = 1L;
 }

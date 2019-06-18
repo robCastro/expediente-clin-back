@@ -1,3 +1,4 @@
+
 ﻿INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (1, 'Ahuachapán');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (2, 'Santa Ana');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (3, 'Sonsonate');
@@ -1199,15 +1200,57 @@ INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperat
 INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (7, '12-12-2018', 9, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 3, 34);
 INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (8, '12-12-2018', 9, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 5, 34);
 
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (1, 'Acetaminofen', '12-10-2018', '17-10-2018', 'cada 12 horas', '1 tableta', 1);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (2, 'Acetaminofen', '12-10-2018', '17-10-2018', 'cada 12 horas', '1 tableta', 2);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (3, 'Acetaminofen', '12-11-2018', '17-11-2018', 'cada 12 horas', '1 tableta', 3);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (4, 'Acetaminofen', '12-11-2018', '17-11-2018', 'cada 12 horas', '1 tableta', 4);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (5, 'Acetaminofen', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 5);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (6, 'Acetaminofen', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 6);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (7, 'Acetaminofen', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 7);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (8, 'Acetaminofen', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 8);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (9, 'Amoxicilina', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 5);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (10, 'Amoxicilina', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 6);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (11, 'Amoxicilina', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 7);
-INSERT INTO tratamiento (id_tratamiento, nombre_tratamiento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (12, 'Amoxicilina', '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 8);
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (1,'Analgesia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (2,'Anestesia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (3,'Cardiologia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (4,'Dermatologia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (5,'Enfermedades infecciosas y parasitarias')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (6,'Gastroenterologia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (7,'Neumologia')
+INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (8,'Oncologia')
+
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (1, 1, 'Ibuprofeno');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (2, 1, 'Paracetamol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (3, 1, 'Morfina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (4, 1, 'Oxicodona');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (5, 2, 'Propofol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (6, 2, 'Ropivacaina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (7, 2, 'Vecuronio');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (8, 2, 'Sevoflurano');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (9, 3, 'Amlodipino');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (10, 3, 'Vecuronio');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (11, 3, 'Digoxina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (12, 3, 'Enalapril');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (13, 4, 'Alibour');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (14, 4, 'Benzoilo');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (15, 4, 'Clioquinol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (16, 4, 'Tacalcinol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (17, 5, 'Ampicilina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (18, 5, 'Cefaclor');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (19, 5, 'Etambutol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (20, 5, 'Quinna');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (21, 6, 'Ranitidina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (22, 6, 'Dexlansoprazol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (23, 6, 'Lidocaina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (24, 6, 'Omeprazol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (25, 7, 'Benzonatato');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (26, 7, 'Teofilina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (27, 7, 'Salmeterol');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (28, 7, 'Sildenafil');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (29, 8, 'Acido Folinico');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (30, 8, 'Amifostina');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (31, 8, 'Etoposido');
+INSERT INTO medicamento(id_medicamento, id_grupo_ter, nombre_medicamento) VALUES (32, 8, 'Mesna');
+
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (1, 1, '12-10-2018', '17-10-2018', 'cada 12 horas', '1 tableta', 1);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (2, 2, '12-10-2018', '17-10-2018', 'cada 12 horas', '1 tableta', 2);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (3, 3, '12-11-2018', '17-11-2018', 'cada 12 horas', '1 tableta', 3);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (4, 4, '12-11-2018', '17-11-2018', 'cada 12 horas', '1 tableta', 4);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (5, 5, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 5);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (6, 6, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 6);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (7, 7, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 7);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (8, 8, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 8);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (9, 9, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 5);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (10, 10, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 6);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (11, 11, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 7);
+INSERT INTO tratamiento (id_tratamiento, id_medicamento, fecha_inicio_tra, fecha_fin_tra, frecuencia, dosis, id_consulta) VALUES (12, 12, '12-12-2018', '17-12-2018', 'cada 12 horas', '1 tableta', 8);
