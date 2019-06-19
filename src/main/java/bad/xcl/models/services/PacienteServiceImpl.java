@@ -50,4 +50,8 @@ public class PacienteServiceImpl implements IPacienteService {
 		pacienteDao.deleteById(id);
 	}
 
+	@Override
+	public List<Object> listarPacientesBasicos (Integer id_hospital) {
+		return (List<Object>) pacienteDao.listarPacientesBasicos(id_hospital);
+	}
 }

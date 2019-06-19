@@ -27,5 +27,9 @@ public interface IPacienteDao extends CrudRepository<Paciente, Integer>{
 		)
 	public List<Paciente> listarPacientesBloqueadosPorHospital(Integer id_hospital);
 	
-
+	@Query(
+			value = "select * from paciente_basico where id_hospital=?1",
+			nativeQuery = true
+		)
+	public List<Object> listarPacientesBasicos(Integer id_hospital);
 }
