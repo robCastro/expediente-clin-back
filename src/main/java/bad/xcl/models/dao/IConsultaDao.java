@@ -28,8 +28,8 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	public List<Consulta> obtenerCitasPorPaciente(Integer id_paciente, Integer id_hospital);	
 	
 	@Query(
-			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 and id_hospital = (select id_hospital from hospital where id_hospital = ?1)) and (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') >= \r\n" + 
-					"(TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))) AND hora_consulta >= to_char(systimestamp,'hh24')",  
+			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 and id_hospital = ?1)\r\n" + 
+					"and ((TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') > (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))) OR (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') >= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')) AND hora_consulta > to_char(systimestamp,'hh24')))",  
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPendientes(Integer id_hospital);

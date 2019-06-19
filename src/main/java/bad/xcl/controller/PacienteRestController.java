@@ -194,4 +194,23 @@ public class PacienteRestController {
 		public List<Object> listarPacienteBasico(@PathVariable Integer id){
 			return pacienteService.listarPacientesBasicos(id);
 		}
+		
+		@GetMapping("usuario/{id}")
+		public ResponseEntity<?> pacienteApartirDelUsuario(@PathVariable Integer id) {
+			Paciente paciente = null;
+			Map<String, Object> response = new HashMap<>();
+			try {
+				paciente = pacienteDao.obtenerPacienteApartirDelUsuario(id);
+			}
+			catch(DataAccessException e) {
+				response.put("mensaje", "Error al realizar la consulta a la Base de Datos");
+				response.put("error", e.getMessage() + ": " + e.getMostSpecificCause().getMessage());
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			if(paciente == null) {
+				response.put("mensaje", "El paciente con ID:" + id + " no existe.");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+			return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+		}
 }

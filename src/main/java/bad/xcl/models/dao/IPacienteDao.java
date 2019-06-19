@@ -32,4 +32,12 @@ public interface IPacienteDao extends CrudRepository<Paciente, Integer>{
 			nativeQuery = true
 		)
 	public List<Object> listarPacientesBasicos(Integer id_hospital);
+	
+	//Obtener paciente apartir del usuario
+	@Query(
+			value = "select * from paciente where id_usuario = ?1 and id_usuario in \r\n" + 
+					"(select id_usuario from usuario natural join users_authorities natural join rol where id_rol = 6)",
+			nativeQuery = true
+		)
+	public Paciente obtenerPacienteApartirDelUsuario(Integer id_usuario);
 }
