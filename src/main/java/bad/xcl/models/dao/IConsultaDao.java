@@ -43,7 +43,7 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	
 	@Query(
 			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 and id_usuario = ?1 and id_usuario in(select id_usuario from users_authorities uu where uu.id_rol = 3))\r\n" + 
-					"and (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') >= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))) AND hora_consulta >= to_char(systimestamp,'hh24')",
+					"and (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') >= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))) ",
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPendientesDoctor(Integer id_usuario);

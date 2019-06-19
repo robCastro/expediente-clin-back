@@ -87,5 +87,36 @@ public class ConsultaRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 	
+	@PutMapping("diagnosticar/{id}")
+	public ResponseEntity<?> updateDiagnostico(@RequestBody Consulta consulta) {
+		Map<String, Object> response = new HashMap<>();
+		Consulta consultaActual = consultaService.findById(consulta.getId());
+		if(consultaActual == null) {
+			response.put("mensaje", "Error, no se pudo editar, la consulta ".concat(consulta.getId().toString()).concat(" no existe"));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		if(consulta.getEnfermedad() == null) {
+			response.put("mensaje", "Error, no especificó una enfermedad para el paciente");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_ACCEPTABLE);
+		}
+		if(consulta.getSintoma() == null) {
+			response.put("mensaje", "Error, no especificó los sintomas para el paciente");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_ACCEPTABLE);
+		}
+		Consulta consultaActualizada = null;
+		consultaActual.setSintoma(consulta.getSintoma());
+		consultaActual.setEnfermedad(consulta.getEnfermedad());
+		try {
+			consultaActualizada = consultaService.save(consultaActual);			
+		}
+		catch(DataAccessException e) {
+			response.put("mensaje", "Error al actualizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "Diagnosticos y Sintomas guardados correctamente");
+		response.put("consulta", consultaActualizada);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
+	}
 
 }
