@@ -1,6 +1,4 @@
-
-
-﻿INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (1, 'Ahuachapán');
+﻿
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (2, 'Santa Ana');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (3, 'Sonsonate');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (4, 'La Libertad');
@@ -14,6 +12,7 @@ INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (11, 'Usu
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (12, 'Morazán');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (13, 'San Miguel');
 INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (14, 'La Unión');
+INSERT INTO departamento (id_departamento, nombre_departamento) VALUES (1, 'Ahuachapán');
 
 
 
@@ -545,9 +544,9 @@ INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, i
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(12, 6);
 INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(13, 1, 54, 214, 1, 1, 'pac2_hos1', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Paciente2', 'Hospital1', '01-01-1970', 'Detalle Direccion', 'email13@email.com', '7272-1212');
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(13, 6);
-INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(14, 2, 54, 214, 1, 1, 'pac1_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Paciente1', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email14@email.com', '7272-1212');
+INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(14, 2, 54, 214, 1, 1, 'pac1_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Paciente3', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email14@email.com', '7272-1212');
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(14, 6);
-INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(15, 2, 54, 214, 2, 1, 'pac2_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Paciente2', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email15@email.com', '7272-1212');
+INSERT INTO usuario(id_usuario, id_hospital, id_pais, id_municipio, id_genero, id_estado_c, username, password, enabled, nombres_usuario, apellidos_usuario, fecha_nac_usuario, detalle_dir_usuario, email_usuario, telefono_usuario) VALUES(15, 2, 54, 214, 2, 1, 'pac2_hos2', '$2a$10$b7MUqX4ku/aEK7tgLMMLcOgYDUY.2UW2DwpMk5aDlRI7kRWdJ7Gm.', 1, 'Paciente4', 'Hospital2', '01-01-1970', 'Detalle Direccion', 'email15@email.com', '7272-1212');
 INSERT INTO users_authorities(id_usuario, id_rol) VALUES(15, 6);
 
 INSERT INTO tipo_enfermedad (id_tipo_enf, nombre_tipo_enf) VALUES (1, 'Alergias');
@@ -1192,14 +1191,28 @@ INSERT INTO historial_clinico (id_historial, fecha_historial, activo_historial, 
 INSERT INTO historial_clinico (id_historial, fecha_historial, activo_historial, id_enfermedad, id_paciente) VALUES (7, '20-03-2016', 1, 59, 4);
 INSERT INTO historial_clinico (id_historial, fecha_historial, activo_historial, id_enfermedad, id_paciente) VALUES (8, '24-11-2008', 0, 300, 4);
 
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (1, '12-06-2019', 8, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 1, 3, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (2, '12-06-2019', 14, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 3, 5, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (3, '10-06-2019', 9, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 2, 3, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (4, '11-06-2019', 10, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 4, 5, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (5, '18-06-2019', 13, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 1, 3, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (6, '20-06-2019', 11, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 5, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (7, '24-06-2019', 9, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 3, 34);
-INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (8, '24-06-2019', 16, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (1, '10-06-2019', 8, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 1, 3, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (2, '12-06-2019', 14, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 2, 4, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (3, '21-06-2019', 9, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 1, 3, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (4, '24-06-2019', 10, 50.2, 35.0, 160, '120/70', 60, 'Dolor de cabeza y fiebre', 1, 3, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (5, '25-06-2019', 13, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 3, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (6, '21-06-2019', 11, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 3, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (7, '27-06-2019', 9, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 1, 4, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (8, '28-06-2019', 8, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 1, 4, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (9, '26-06-2019', 10, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 4, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (10, '27-06-2019', 11, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 2, 4, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (11, '18-06-2019', 14, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (12, '19-06-2019', 15, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (13, '21-06-2019', 16, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 6, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (14, '24-06-2019', 8, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (15, '25-06-2019', 10, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (16, '26-06-2019', 11, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 5, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (17, '27-06-2019', 13, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 6, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (18, '28-06-2019', 14, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 3, 6, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (19, '25-06-2019', 9, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 6, 34);
+INSERT INTO consulta (id_consulta, fecha_consulta, hora_consulta, peso, temperatura, estatura, presion_arterial, ritmo_cardiaco, sintoma, id_paciente, id_usuario, id_enfermedad) VALUES (20, '26-06-2019', 16, 50.2, 35.0, 160, '120/70', 60, 'Tos y fiebre', 4, 6, 34);
+
+
 
 INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (1,'Analgesia')
 INSERT INTO grupo_terapeutico(id_grupo_ter,nombre_grupo_ter)VALUES (2,'Anestesia')
