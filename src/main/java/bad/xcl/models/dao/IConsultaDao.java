@@ -30,8 +30,8 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	@Query(
 			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 \r\n" + 
 					"and id_hospital in (select id_hospital from usuario where id_hospital = ?1))\r\n" + 
-					"and ((TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') > TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))\r\n" + 
-					"OR (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy')>= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')) AND (hora_consulta > to_char(systimestamp,'hh24'))))",  
+					"and ((TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') > TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy'))\r\n" + 
+					"OR (TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy')>= (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')) AND (hora_consulta > to_char(systimestamp,'hh24'))))",  
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPendientes(Integer id_hospital);
@@ -39,8 +39,8 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	@Query(
 			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 \r\n" + 
 					"and id_hospital in (select id_hospital from usuario where id_hospital = ?1))\r\n" + 
-					"and ((TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') < TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy'))\r\n" + 
-					"OR (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy')<= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')) AND (hora_consulta < to_char(systimestamp,'hh24'))))",
+					"and ((TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') < TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy'))\r\n" + 
+					"OR (TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy')<= (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')) AND (hora_consulta < to_char(systimestamp,'hh24'))))",
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPasadas(Integer id_hospital);
@@ -48,8 +48,8 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	@Query(
 			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 and id_usuario = ?1\r\n" + 
 					"and id_usuario in(select id_usuario from users_authorities uu where uu.id_rol = 3))\r\n" + 
-					"and ((TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') > (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')))\r\n" + 
-					"OR (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') >= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')) AND hora_consulta > to_char(systimestamp,'hh24')))",
+					"and ((TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') > (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')))\r\n" + 
+					"OR (TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') >= (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')) AND hora_consulta > to_char(systimestamp,'hh24')))",
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPendientesDoctor(Integer id_usuario);
@@ -57,8 +57,8 @@ public interface IConsultaDao extends CrudRepository<Consulta, Integer>{
 	@Query(
 			value = "select * from consulta where id_usuario in (select id_usuario from usuario where enabled = 1 and id_usuario = ?1\r\n" + 
 					"and id_usuario in(select id_usuario from users_authorities uu where uu.id_rol = 3))\r\n" + 
-					"and ((TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') < (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')))\r\n" + 
-					"OR (TO_CHAR(TO_DATE(fecha_consulta),'ddmmyyyy') <= (TO_CHAR(TO_DATE(SYSDATE),'ddmmyyyy')) AND hora_consulta < to_char(systimestamp,'hh24')))",
+					"and ((TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') < (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')))\r\n" + 
+					"OR (TO_CHAR(TO_DATE(fecha_consulta),'mmddyyyy') <= (TO_CHAR(TO_DATE(SYSDATE),'mmddyyyy')) AND hora_consulta < to_char(systimestamp,'hh24')))",
 			nativeQuery = true
 		)
 	public List<Consulta> obtenerCitasPasadasDoctor(Integer id_usuario);
