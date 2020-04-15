@@ -2,6 +2,6 @@ Como parte de la catedra de bases de Datos, desarrollamos un sistema que sirva c
 
 Los componentes del sistema son:
 
-    - Backend (https://github.com/robCastro/expediente-clin-back): Implementado con Spring, utiliza Spring Boot, Spring Security y JPA. Contiene además llamadas a vistas almacenadas en la base de datos.
+- Backend (https://github.com/robCastro/expediente-clin-back): Implementado con Spring, utiliza Spring Boot, Spring Security y JPA. Contiene además llamadas a vistas almacenadas en la base de datos.
 
-    - Frontend (https://github.com/robCastro/expediente-clin-front): Front end para la presentación del sistema
+- Frontend (https://github.com/robCastro/expediente-clin-front): Front end para la presentación del sistema
